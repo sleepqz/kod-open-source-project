@@ -1,0 +1,325 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── DESIGN TOKENS ─────────────────────────────────────────────────────────── */
+:root {
+  --bg:       #080808;
+  --bg-2:     #111111;
+  --surface:  rgba(255,255,255,0.05);
+  --surface-2:rgba(255,255,255,0.09);
+  --border:   rgba(255,255,255,0.08);
+  --border-2: rgba(255,255,255,0.16);
+  --text:     rgba(255,255,255,0.90);
+  --text-2:   rgba(255,255,255,0.48);
+  --text-3:   rgba(255,255,255,0.22);
+  --shadow:   0 8px 40px rgba(0,0,0,0.7);
+  --radius-sm: 8px;
+  --radius:    10px;
+  --radius-lg: 14px;
+  /* macOS traffic lights */
+  --mac-red:    #ff5f57;
+  --mac-yellow: #febc2e;
+  --mac-green:  #28c840;
+  /* Accents */
+  --danger:   #e83535;
+  /* Legacy compat */
+  --glass-bg:     var(--surface);
+  --glass-border: var(--border);
+  --glass-border-bright: var(--border-2);
+  --glass-shadow: var(--shadow);
+  --text-primary:   var(--text);
+  --text-secondary: var(--text-2);
+  --text-faint:     var(--text-3);
+  --red:        var(--danger);
+  --red-dim:    rgba(232,53,53,0.55);
+  --red-glow:   rgba(232,53,53,0.28);
+  /* Responsive container */
+  --container: min(680px, 100% - 2.5rem);
+}
+
+/* ── BASE ───────────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button { font-family: inherit; }
+}
+
+/* ── SCREEN ─────────────────────────────────────────────────────────────────── */
+.screen {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── PANEL (macOS frosted glass) ────────────────────────────────────────────── */
+.panel {
+  background: rgba(16,16,16,0.88);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 1.2rem 1.4rem;
+}
+
+/* ── BUTTONS ────────────────────────────────────────────────────────────────── */
+.btn {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  padding: 0.62rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.08s;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.btn:hover {
+  background: var(--surface-2);
+  border-color: var(--border-2);
+  color: #fff;
+}
+.btn:active { opacity: 0.8; transform: scale(0.99); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+.btn-xl {
+  font-size: 0.93rem;
+  padding: 0.72rem 1.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* macOS-style primary: white button */
+.btn-primary {
+  background: rgba(255,255,255,0.90);
+  border-color: transparent;
+  color: #111;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: #fff;
+  border-color: transparent;
+  color: #000;
+}
+
+.btn-danger {
+  background: rgba(232,53,53,0.10);
+  border-color: rgba(232,53,53,0.25);
+  color: rgba(255,140,140,0.9);
+}
+.btn-danger:hover {
+  background: rgba(232,53,53,0.18);
+  border-color: rgba(232,53,53,0.4);
+}
+
+.btn-ghost {
+  background: none;
+  border-color: transparent;
+  color: var(--text-2);
+}
+.btn-ghost:hover {
+  background: var(--surface);
+  border-color: transparent;
+  color: var(--text);
+}
+
+/* ── FORM ───────────────────────────────────────────────────────────────────── */
+.label {
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.input-field {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 0.62rem 0.9rem;
+  font-size: 0.93rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  outline: none;
+  transition: border-color 0.12s, background 0.12s;
+  caret-color: rgba(255,255,255,0.6);
+}
+.input-field:focus {
+  border-color: var(--border-2);
+  background: rgba(255,255,255,0.07);
+}
+.input-field::placeholder { color: var(--text-3); }
+
+.error-box {
+  background: rgba(232,53,53,0.08);
+  border: 1px solid rgba(232,53,53,0.2);
+  border-radius: var(--radius-sm);
+  color: rgba(255,140,140,0.9);
+  font-size: 0.82rem;
+  padding: 0.55rem 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 0.82rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-bottom: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.12s;
+}
+.back-btn:hover { color: var(--text); }
+
+/* ── PROGRESS ───────────────────────────────────────────────────────────────── */
+.progress-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: rgba(255,255,255,0.45);
+  border-radius: 100px;
+  transition: width 0.3s ease;
+}
+
+/* ── NUMBER GRID ─────────────────────────────────────────────────────────────── */
+.num-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+  gap: 3px;
+}
+
+.num-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-2);
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.08s, color 0.08s;
+  user-select: none;
+}
+.num-cell:hover {
+  background: rgba(255,255,255,0.10);
+  color: var(--text);
+}
+.num-cell.selected {
+  background: rgba(255,255,255,0.88);
+  color: #111;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+/* ── MACOS TRAFFIC LIGHTS ────────────────────────────────────────────────────── */
+.mac-lights {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.mac-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.mac-light-red    { background: var(--mac-red); }
+.mac-light-yellow { background: var(--mac-yellow); }
+.mac-light-green  { background: var(--mac-green); }
+
+/* ── ANIMATIONS ─────────────────────────────────────────────────────────────── */
+.heartbeat-aura {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  box-shadow: inset 0 0 80px rgba(232,53,53,0.12);
+  animation: heartbeatPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes heartbeatPulse {
+  0%,100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+
+@keyframes wastedReveal {
+  0%   { opacity: 0; transform: scaleX(3.5) scaleY(0.18); filter: blur(6px) brightness(3); }
+  45%  { opacity: 1; transform: scaleX(1.04) scaleY(1.01); filter: blur(0) brightness(1.4); }
+  65%  { transform: scaleX(0.98) scaleY(0.99); }
+  100% { opacity: 1; transform: scaleX(1) scaleY(1); }
+}
+
+@keyframes wastedBg {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes wastedButtons {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+@keyframes winnerGlow {
+  0%,100% { box-shadow: 0 0 14px currentColor; }
+  50%      { box-shadow: 0 0 28px currentColor; }
+}
